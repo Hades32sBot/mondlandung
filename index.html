@@ -95,6 +95,7 @@
 
             // 130-200 Initialisierung
             case "init":
+              yield { t: "reset" };
               L = 0; A = 120; V = 1; M = 32500; K = 0;
               N = 16500; G = 0.001; Z = 1.8;
               pc = "header"; break;
@@ -197,15 +198,30 @@
 
       /* ---------------- UI ---------------- */
 
-      function MondAnsicht({ tele, running }) {
+      function MondAnsicht({ tele, running, result }) {
         const theme = useHostTheme();
         const frac = Math.max(0, Math.min(1, tele.A / 120));
         const groundY = 260, topY = 24;
         const y = topY + (1 - frac) * (groundY - topY - 14);
         const flame = running && tele.K > 0 ? Math.min(26, 4 + tele.K / 8) : 0;
+        const landed = result && result.w < 60;   // Kapsel heil genug fuer eine Fahne
+        const crashed = result && result.w >= 60; // neuer Krater
         const stars = [[12,30],[40,14],[66,38],[88,20],[30,70],[74,80],[55,55],[90,100],[15,120],[80,150]];
+        const burst = [0,1,2,3,4,5,6,7,8,9,10,11];
         return (
           <svg viewBox="0 0 110 290" style={{ width: "100%", maxWidth: 220, display: "block", margin: "0 auto" }}>
+            <style>{`@keyframes mond-konfetti {
+              0% { transform: translateY(-4vh) rotate(0deg); opacity: 1; }
+              90% { opacity: 1; }
+              100% { transform: translateY(108vh) rotate(720deg); opacity: 0; }
+            }
+            @keyframes mond-explosion {
+              0% { transform: scale(0.3); opacity: 1; }
+              60% { transform: scale(1.25); opacity: 1; }
+              100% { transform: scale(1.45); opacity: 0.35; }
+            }
+            .mond-boom { transform-box: fill-box; transform-origin: center; animation: mond-explosion 1.6s ease-out forwards; }
+            `}</style>
             {stars.map(([x, sy], i) => (
               <circle key={i} cx={x} cy={sy} r={0.8} fill={theme.text.quaternary} />
             ))}
@@ -217,16 +233,75 @@
                 points={`52,${y + 12} 58,${y + 12} 55,${y + 12 + flame}`}
                 fill={theme.category.orange} />
             )}
-            <g transform={`translate(55 ${y})`}>
-              <rect x={-5} y={0} width={10} height={10} rx={2}
-                    fill={theme.bg.elevated} stroke={theme.stroke.secondary} />
-              <line x1={-5} y1={10} x2={-9} y2={14} stroke={theme.stroke.secondary} />
-              <line x1={5} y1={10} x2={9} y2={14} stroke={theme.stroke.secondary} />
-              <circle cx={0} cy={4} r={1.6} fill={theme.accent.primary} />
-            </g>
+            {!crashed && (
+              <g transform={`translate(55 ${y})`}>
+                <rect x={-5} y={0} width={10} height={10} rx={2}
+                      fill={theme.bg.elevated} stroke={theme.stroke.secondary} />
+                <line x1={-5} y1={10} x2={-9} y2={14} stroke={theme.stroke.secondary} />
+                <line x1={5} y1={10} x2={9} y2={14} stroke={theme.stroke.secondary} />
+                <circle cx={0} cy={4} r={1.6} fill={theme.accent.primary} />
+                {landed && (
+                  <g transform="translate(9 -18)">
+                    <line x1={0} y1={0} x2={0} y2={32} stroke={theme.stroke.primary} />
+                    <polygon points="0,0 14,4 0,9" fill={theme.category.red} />
+                  </g>
+                )}
+              </g>
+            )}
+            {crashed && (
+              <g transform={`translate(55 ${groundY - 16})`} className="mond-boom">
+                {burst.map((i) => {
+                  const a = (i / burst.length) * Math.PI * 2;
+                  const x1 = Math.cos(a) * 6, y1 = Math.sin(a) * 6;
+                  const x2 = Math.cos(a) * 22, y2 = Math.sin(a) * 22;
+                  return (
+                    <line key={i} x1={x1} y1={y1} x2={x2} y2={y2}
+                          stroke={i % 2 ? theme.category.orange : theme.category.red}
+                          strokeWidth={1.6} />
+                  );
+                })}
+                <polygon points="0,-10 3,-3 10,-3 4,2 6,9 0,5 -6,9 -4,2 -10,-3 -3,-3"
+                         fill={theme.category.yellow} />
+                <circle cx={0} cy={0} r={5} fill={theme.category.orange} />
+              </g>
+            )}
             <path d={`M0 ${groundY} Q 18 ${groundY - 6} 34 ${groundY} T 70 ${groundY} T 110 ${groundY} V290 H0 Z`}
                   fill={theme.fill.tertiary} />
+            {crashed && (
+              <ellipse cx={55} cy={groundY + 2} rx={16} ry={4}
+                       fill={theme.fill.quaternary} stroke={theme.stroke.secondary} />
+            )}
           </svg>
+        );
+      }
+
+      function Konfetti({ aktiv }) {
+        const theme = useHostTheme();
+        const farben = [
+          theme.category.green, theme.category.orange, theme.category.blue,
+          theme.category.yellow, theme.category.purple, theme.category.cyan,
+          theme.category.pink, theme.accent.primary,
+        ];
+        const teile = React.useMemo(() => Array.from({ length: 90 }, (_, i) => ({
+          links: Math.random() * 100,
+          delay: Math.random() * 1.2,
+          dauer: 2.6 + Math.random() * 2.2,
+          gr: 5 + Math.random() * 6,
+          farbe: farben[i % farben.length],
+          rund: i % 3 === 0,
+        })), [aktiv]);
+        if (!aktiv) return null;
+        return (
+          <div style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 50, overflow: "hidden" }}>
+            {teile.map((t, i) => (
+              <span key={i} style={{
+                position: "absolute", top: -20, left: `${t.links}%`,
+                width: t.gr, height: t.gr * (t.rund ? 1 : 1.6),
+                background: t.farbe, borderRadius: t.rund ? "50%" : 1,
+                animation: `mond-konfetti ${t.dauer}s ${t.delay}s linear forwards`,
+              }} />
+            ))}
+          </div>
         );
       }
 
@@ -259,6 +334,7 @@
         const [tele, setTele] = React.useState({ L: 0, A: 120, V: 3600, fuel: 16000, K: 0 });
         const [awaiting, setAwaiting] = React.useState(null); // "rate" | "again" | null
         const [ended, setEnded] = React.useState(false);
+        const [result, setResult] = React.useState(null);     // {w: Endgeschw. km/h}
         const [eingabe, setEingabe] = React.useState("");
         const genRef = React.useRef(null);
         const termRef = React.useRef(null);
@@ -284,6 +360,9 @@
             } else if (v.t === "tele") {
               setTele({ L: v.L, A: v.A, V: v.v, fuel: v.fuel, K: v.K });
               newRows.push({ L: v.L, A: v.A, v: v.v, fuel: v.fuel, K: v.K });
+              setResult({ w: v.v });
+            } else if (v.t === "reset") {
+              setResult(null); setRows([]);
             } else if (v.t === "input") { setAwaiting(v.kind); break; }
             r = gen.next();
           }
@@ -295,7 +374,7 @@
         const start = () => {
           genRef.current = MONDLANDUNG();
           setLines([]); setRows([]); setEnded(false); setEingabe("");
-          setAwaiting(null);
+          setAwaiting(null); setResult(null);
           setTele({ L: 0, A: 120, V: 3600, fuel: 16000, K: 0 });
           pump();
         };
@@ -314,6 +393,7 @@
 
         return (
           <Grid columns="repeat(auto-fit, minmax(min(100%, 290px), 1fr))" gap={20} align="start">
+            <Konfetti aktiv={!!result && result.w < 25} />
             {/* Terminal */}
             <Card>
               <CardHeader trailing={
@@ -398,7 +478,7 @@
                     topLeftLabel="Treibstoff"
                     topRightLabel={Math.round(tele.fuel) + " / 16000 l"}
                   />
-                  <MondAnsicht tele={tele} running={running} />
+                  <MondAnsicht tele={tele} running={running} result={result} />
                   <Text size="small" tone="tertiary">
                     Kapselgewicht 15 t · Freier Fall: Aufschlag in 120 s · Schubrate alle 10 s waehlbar.
                   </Text>
