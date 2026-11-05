@@ -345,6 +345,38 @@
         const genRef = React.useRef(null);
         const termRef = React.useRef(null);
         const autoRef = React.useRef([]);
+        const audioRef = React.useRef(null);
+        const [dispA, setDispA] = React.useState(120); // animierte Hoehe
+
+        // Retro-Burner: Quarzwelle + Rauschen, Intensitaet ~ K
+        const playBurner = (K) => {
+          try {
+            if (!audioRef.current) {
+              audioRef.current = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            const ctx = audioRef.current;
+            const t = ctx.currentTime, dur = 0.5;
+            const g = ctx.createGain();
+            g.gain.setValueAtTime(0.0001, t);
+            g.gain.exponentialRampToValueAtTime(0.02 + (K / 200) * 0.16, t + 0.04);
+            g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+            const o = ctx.createOscillator();
+            o.type = "square";
+            o.frequency.setValueAtTime(45 + K * 0.55, t);
+            o.frequency.exponentialRampToValueAtTime(35 + K * 0.3, t + dur);
+            o.connect(g);
+            const buf = ctx.createBuffer(1, ctx.sampleRate * dur, ctx.sampleRate);
+            const d = buf.getChannelData(0);
+            for (let i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * (1 - (i / d.length) * 0.4);
+            const ns = ctx.createBufferSource(); ns.buffer = buf;
+            const f = ctx.createBiquadFilter();
+            f.type = "bandpass"; f.frequency.value = 180 + K * 4; f.Q.value = 1.1;
+            const ng = ctx.createGain(); ng.gain.value = 0.4 + K / 220;
+            ns.connect(f).connect(ng).connect(g);
+            g.connect(ctx.destination);
+            o.start(t); o.stop(t + dur); ns.start(t); ns.stop(t + dur);
+          } catch (e) { /* Audio nicht verfuegbar */ }
+        };
 
         const scrollDown = () => {
           requestAnimationFrame(() => {
@@ -369,13 +401,18 @@
               newRows.push({ L: v.L, A: v.A, v: v.v, fuel: v.fuel, K: v.K });
               setResult({ w: v.v });
             } else if (v.t === "reset") {
-              setResult(null); setRows([]);
+              setResult(null); setRows([]); setDispA(120);
+              setTele({ L: 0, A: 120, V: 3600, fuel: 16000, K: 0 });
             } else if (v.t === "input") {
               if (v.kind === "rate" && autoRef.current.length) {
                 const k = autoRef.current.shift();
-                newLines.push("? " + k + "   (Autopilot)");
-                r = gen.next(k);
-                continue;
+                setAwaiting(null); // manuelle Eingabe pausiert waehrend Autopilot
+                setTimeout(() => {
+                  setLines((p) => [...p, "? " + k + "   (Autopilot)"]);
+                  playBurner(k);
+                  pump(k);
+                }, 3000);
+                break;
               }
               setAwaiting(v.kind); break;
             }
@@ -392,9 +429,21 @@
             const k = autoRef.current.shift();
             setAwaiting(null);
             setLines((p) => [...p, "? " + k + "   (Autopilot)"]);
+            playBurner(k);
             pump(k);
           }
         };
+
+        // weiche Lander-Animation: Hoehe interpoliert zum Telemetriewert
+        React.useEffect(() => {
+          let raf;
+          const tick = () => {
+            setDispA((prev) => prev + (tele.A - prev) * 0.07);
+            raf = requestAnimationFrame(tick);
+          };
+          raf = requestAnimationFrame(tick);
+          return () => cancelAnimationFrame(raf);
+        }, [tele.A]);
 
         const start = () => {
           autoRef.current = [];
@@ -402,6 +451,7 @@
           setLines([]); setRows([]); setEnded(false); setEingabe("");
           setAwaiting(null); setResult(null);
           setTele({ L: 0, A: 120, V: 3600, fuel: 16000, K: 0 });
+          setDispA(120);
           pump();
         };
 
@@ -412,6 +462,7 @@
           setLines((p) => [...p, "? " + val]);
           setEingabe("");
           setAwaiting(null);
+          if (awaiting === "rate") playBurner(isFinite(n) ? n : 0);
           pump(awaiting === "again" ? (n === 1 ? 1 : 0) : n);
         };
 
@@ -507,7 +558,7 @@
                     topLeftLabel="Treibstoff"
                     topRightLabel={Math.round(tele.fuel) + " / 16000 l"}
                   />
-                  <MondAnsicht tele={tele} running={running} result={result} />
+                  <MondAnsicht tele={{ ...tele, A: dispA }} running={running} result={result} />
                   <Text size="small" tone="tertiary">
                     Kapselgewicht 15 t · Freier Fall: Aufschlag in 120 s · Schubrate alle 10 s waehlbar.
                   </Text>
