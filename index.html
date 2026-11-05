@@ -152,6 +152,7 @@
               yield out("");
               yield out("Gelandet nach:  " + Math.round(L) + " Sekunden");
               W = 3600 * V;
+              yield { t: "tele", L, A: 0, v: W, fuel: Math.max(0, M - N), K };
               yield out("Endgeschwindigkeit von:  " + W.toFixed(2) + " km/h");
               yield out("Rest-Sprit:  " + Math.round(M - N) + " Liter !");
               if (W < 1)  yield out("Perfekte Landung! (Glueck gehabt!)");
@@ -280,6 +281,9 @@
               newRows.push(v);
               newLines.push(fmtRow(v.L, v.A, v.v, v.fuel, v.K));
               setTele({ L: v.L, A: v.A, V: v.v, fuel: v.fuel, K: v.K });
+            } else if (v.t === "tele") {
+              setTele({ L: v.L, A: v.A, V: v.v, fuel: v.fuel, K: v.K });
+              newRows.push({ L: v.L, A: v.A, v: v.v, fuel: v.fuel, K: v.K });
             } else if (v.t === "input") { setAwaiting(v.kind); break; }
             r = gen.next();
           }
@@ -309,7 +313,7 @@
         const running = awaiting === "rate" || (awaiting === null && !ended);
 
         return (
-          <Grid columns="repeat(auto-fit, minmax(min(100%, 380px), 1fr))" gap={20} align="start">
+          <Grid columns="repeat(auto-fit, minmax(min(100%, 290px), 1fr))" gap={20} align="start">
             {/* Terminal */}
             <Card>
               <CardHeader trailing={
