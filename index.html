@@ -249,7 +249,8 @@
               </g>
             )}
             {crashed && (
-              <g transform={`translate(55 ${groundY - 16})`} className="mond-boom">
+              <g transform={`translate(55 ${groundY - 16})`}>
+                <g className="mond-boom">
                 {burst.map((i) => {
                   const a = (i / burst.length) * Math.PI * 2;
                   const x1 = Math.cos(a) * 6, y1 = Math.sin(a) * 6;
@@ -263,6 +264,7 @@
                 <polygon points="0,-10 3,-3 10,-3 4,2 6,9 0,5 -6,9 -4,2 -10,-3 -3,-3"
                          fill={theme.category.yellow} />
                 <circle cx={0} cy={0} r={5} fill={theme.category.orange} />
+                </g>
               </g>
             )}
             <path d={`M0 ${groundY} Q 18 ${groundY - 6} 34 ${groundY} T 70 ${groundY} T 110 ${groundY} V290 H0 Z`}
