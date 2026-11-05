@@ -59,6 +59,10 @@
       const HEADER_ROW =
         "Zeit  Entfernung(km)  Geschw.(km/h)  Sprit,Ltr  K-Rate";
 
+      // Optimierter Flugplan: landet mit ~4 km/h (Rest-Sprit ~547 l)
+      const AUTOPLAN = [0, 0, 0, 0, 0, 193.4, 100.8, 116.7, 78.2, 105,
+                        156.2, 115.8, 169, 153.3, 182.1, 172.7, 8, 8, 8];
+
       function* MONDLANDUNG() {
         // BASIC-Variablen
         let L, A, V, M, N, G, Z, K, T, S, I, J, W, Q, J9;
@@ -340,6 +344,7 @@
         const [eingabe, setEingabe] = React.useState("");
         const genRef = React.useRef(null);
         const termRef = React.useRef(null);
+        const autoRef = React.useRef([]);
 
         const scrollDown = () => {
           requestAnimationFrame(() => {
@@ -365,7 +370,15 @@
               setResult({ w: v.v });
             } else if (v.t === "reset") {
               setResult(null); setRows([]);
-            } else if (v.t === "input") { setAwaiting(v.kind); break; }
+            } else if (v.t === "input") {
+              if (v.kind === "rate" && autoRef.current.length) {
+                const k = autoRef.current.shift();
+                newLines.push("? " + k + "   (Autopilot)");
+                r = gen.next(k);
+                continue;
+              }
+              setAwaiting(v.kind); break;
+            }
             r = gen.next();
           }
           if (newLines.length) setLines((p) => [...p, ...newLines]);
@@ -373,7 +386,18 @@
           scrollDown();
         };
 
+        const autopilot = () => {
+          autoRef.current = AUTOPLAN.slice();
+          if (awaiting === "rate") {
+            const k = autoRef.current.shift();
+            setAwaiting(null);
+            setLines((p) => [...p, "? " + k + "   (Autopilot)"]);
+            pump(k);
+          }
+        };
+
         const start = () => {
+          autoRef.current = [];
           genRef.current = MONDLANDUNG();
           setLines([]); setRows([]); setEnded(false); setEingabe("");
           setAwaiting(null); setResult(null);
@@ -399,7 +423,10 @@
             {/* Terminal */}
             <Card>
               <CardHeader trailing={
-                <Button variant="ghost" onClick={start}>Neustart</Button>
+                <Row gap={8}>
+                  <Button variant="ghost" onClick={autopilot}>Autopilot</Button>
+                  <Button variant="ghost" onClick={start}>Neustart</Button>
+                </Row>
               }>
                 Houston Terminal — TTY
               </CardHeader>
