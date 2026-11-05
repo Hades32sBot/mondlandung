@@ -309,9 +309,9 @@
         const running = awaiting === "rate" || (awaiting === null && !ended);
 
         return (
-          <Grid columns="repeat(auto-fit, minmax(min(100%, 340px), 1fr))" gap={20} align="start">
+          <Grid columns="repeat(auto-fit, minmax(min(100%, 380px), 1fr))" gap={20} align="start">
             {/* Terminal */}
-            <Card style={{ gridColumn: "1 / -1" }}>
+            <Card>
               <CardHeader trailing={
                 <Button variant="ghost" onClick={start}>Neustart</Button>
               }>
@@ -403,7 +403,7 @@
             </Card>
 
             {/* Flugkurve */}
-            {rows.length > 1 && (
+            {rows.length > 0 && (
               <Card>
                 <CardHeader>Flugkurve (Telemetrie)</CardHeader>
                 <CardBody>
