@@ -5,18 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="color-scheme" content="dark light" />
     <title>MONDLANDUNG – BASIC-Simulation</title>
-    <meta name="description" content="Mondlandung simulieren wie 1973: HP-BASIC-Port mit TTY-Terminal, Treibstoffsteuerung alle 10 Sekunden, Flugkurven, Fahne, Konfetti — und Explosion. Mit Autopilot." />
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="MONDLANDUNG – BASIC-Simulation" />
-    <meta property="og:description" content="Simuliere die Mondlandung wie im HP-BASIC-Programm von 1973: Treibstoffrate alle 10 Sekunden wählen, 16.000 l Sprit, Kapsel 15 t — perfekt (<1 km/h) oder neuer Krater. Mit Autopilot." />
-    <meta property="og:image" content="https://hades32sbot.github.io/mondlandung/og.png" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:url" content="https://hades32sbot.github.io/mondlandung/" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="MONDLANDUNG – BASIC-Simulation" />
-    <meta name="twitter:description" content="HP-BASIC-Mondlandung als Web-App: TTY, Treibstoff, Flugkurve, Konfetti, Explosion — mit Autopilot." />
-    <meta name="twitter:image" content="https://hades32sbot.github.io/mondlandung/og.png" />
     <style>
       :root {
         font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -71,9 +59,9 @@
       const HEADER_ROW =
         "Zeit  Entfernung(km)  Geschw.(km/h)  Sprit,Ltr  K-Rate";
 
-      // Optimierter Flugplan: landet mit ~4 km/h (Rest-Sprit ~547 l)
+      // Optimierter Flugplan: landet mit ~0,3 km/h (Rest-Sprit ~600 l)
       const AUTOPLAN = [0, 0, 0, 0, 0, 193.4, 100.8, 116.7, 78.2, 105,
-                        156.2, 115.8, 169, 153.3, 182.1, 172.7, 8, 8, 8];
+                        156.2, 115.8, 169, 153.3, 182.1, 172.7, 10.5];
 
       function* MONDLANDUNG() {
         // BASIC-Variablen
