@@ -134,7 +134,7 @@ async function main(tty) {
 
   const PIP = ["","\u2680","\u2681","\u2682","\u2683","\u2684","\u2685"];
   const buch = ["A","B","C","D","E"];
-  const state = { dice: [1,1,1,1,1], hold: [false,false,false,false,false], wuerfe: 0, spieler: 0 };
+  const state = { dice: [0,0,0,0,0], hold: [false,false,false,false,false], wuerfe: 0, spieler: 0 };
 
   function render() {
     const p = state.spieler, tp = T[p];
@@ -167,8 +167,10 @@ async function main(tty) {
     // Wuerfelzeile
     h += '<div class="row" style="margin:14px 0 4px"><span class="dim">Wurf ' + state.wuerfe + '/3 — ' + namen[p] + '</span></div>';
     h += '<div class="row">' + state.dice.map((d,i) =>
-      '<button class="pill' + (state.hold[i] ? '' : ' sel') + '" data-die="'+i+'" style="font-size:22px;min-width:52px">' +
-      PIP[d] + '<br><span style="font-size:11px" class="dim">' + buch[i] + (state.hold[i] ? ' (halten)' : '') + '</span></button>'
+      '<button class="pill' + (state.hold[i] ? '' : ' sel') + '" data-die="'+i+'" style="font-size:22px;min-width:52px"' +
+      (state.wuerfe === 0 ? ' disabled' : '') + '>' +
+      (d ? PIP[d] : "-") + '<br><span style="font-size:11px" class="dim">' + buch[i] +
+      (state.hold[i] && state.wuerfe ? ' (halten)' : '') + '</span></button>'
     ).join("") + "</div>";
     h += '<div class="row">' +
       (state.wuerfe < 3 ? '<button id="wuerf">' + (state.wuerfe ? "Nochmals wuerfeln" : "Wuerfeln") + '</button>' : '') +
@@ -184,7 +186,8 @@ async function main(tty) {
       tp[c] = val;
       const Mx = Math.max(...[0,0,0,0,0,0].map((_,m)=>state.dice.filter(d=>d===m+1).length));
       if (Mx === 5 && tp[11] === 50) tp.yb = (tp.yb || 0) + 100;
-      state.hold = [false,false,false,false,false]; state.wuerfe = 0;
+      state.hold = [false,false,false,false,false];
+      state.wuerfe = 0; state.dice = [0,0,0,0,0];
       next();
     });
   }
