@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="de"><head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>GET DATUM</title>
+<meta name="description" content="BASIC-Programm GET DATUM — deutsches Datum mit Wochentag (HP-BASIC DAT$)." />
+<style>
+  * { box-sizing: border-box; }
+  body { margin:0; background:#0B0E14; color:#E4E4E4;
+    font-family: ui-monospace, Menlo, Consolas, monospace; }
+  .page { max-width:900px; margin:0 auto; padding:28px 20px 64px; }
+  .back { display:inline-block; color:#87C3FF; text-decoration:none; margin-bottom:18px; font-size:14px; }
+  h1 { font-size:26px; letter-spacing:5px; margin:0 0 6px; }
+  .sub { color:#A3B0C4; font-size:14px; margin-bottom:20px; line-height:1.5; }
+  #tty { background:#101214; border:1px solid #23272f; border-radius:8px;
+    padding:14px 16px; min-height:180px; max-height:62vh; overflow:auto;
+    white-space:pre-wrap; font-size:14px; line-height:1.55; color:#3FA266; }
+  #tty .in-line { color:#87C3FF; }
+  .row { display:flex; gap:8px; margin-top:10px; flex-wrap:wrap; align-items:center; }
+  input, select { background:#181818; border:1px solid #23272f; color:#E4E4E4;
+    border-radius:6px; padding:8px 10px; font:inherit; }
+  button { background:#599CE7; color:#191C22; border:0; border-radius:6px;
+    padding:8px 16px; font:inherit; cursor:pointer; }
+  button.ghost { background:transparent; color:#87C3FF; border:1px solid #23272f; }
+  button.pill { background:#181818; color:#E4E4E4; border:1px solid #23272f; padding:6px 14px; }
+  button.sel { border-color:#599CE7; color:#87C3FF; }
+  table { border-collapse:collapse; margin:8px 0; }
+  td, th { border:1px solid #23272f; padding:4px 10px; text-align:right; }
+  th { color:#87C3FF; font-weight:600; text-align:left; }
+  .tblwrap { overflow:auto; max-width:100%; }
+  .green { color:#3FA266; } .dim { color:#7E8A9E; } .acc { color:#599CE7; }
+</style></head><body>
+<div class="page">
+  <a class="back" href="index.html">&larr; Uebersicht</a>
+  <h1>GET DATUM</h1>
+  <div class="sub">BASIC-Programm GET DATUM — deutsches Datum mit Wochentag (HP-BASIC DAT$).</div>
+  <div id="tty" aria-live="polite"></div>
+  <div id="ui"></div>
+</div>
+<script>
+const ttyEl = document.getElementById('tty');
+const tty = {
+  print(s = "") { const d = document.createElement("div"); d.textContent = s;
+    ttyEl.appendChild(d); ttyEl.scrollTop = ttyEl.scrollHeight; },
+  html(s) { const d = document.createElement("div"); d.innerHTML = s;
+    ttyEl.appendChild(d); ttyEl.scrollTop = ttyEl.scrollHeight; },
+  clear() { ttyEl.innerHTML = ""; },
+  input(prompt) {
+    return new Promise((res) => {
+      const f = document.createElement("form");
+      f.className = "row";
+      const lb = document.createElement("span"); lb.textContent = prompt;
+      lb.style.cssText = "color:#87C3FF";
+      const inp = document.createElement("input");
+      inp.autocomplete = "off"; inp.style.cssText = "flex:1;min-width:100px";
+      const b = document.createElement("button"); b.type = "submit"; b.textContent = "Eingabe";
+      f.append(lb, inp, b);
+      ttyEl.appendChild(f); inp.focus(); ttyEl.scrollTop = ttyEl.scrollHeight;
+      f.onsubmit = (e) => { e.preventDefault(); const v = inp.value; f.remove();
+        tty.print(prompt + " " + v); res(v); };
+    });
+  },
+  buttons(label, opts) {
+    return new Promise((res) => {
+      const w = document.createElement("div"); w.className = "row";
+      if (label) { const s = document.createElement("span");
+        s.textContent = label; s.style.color = "#87C3FF"; w.appendChild(s); }
+      opts.forEach((o) => { const b = document.createElement("button");
+        b.type = "button"; b.textContent = o.label; b.className = o.cls || "pill";
+        b.onclick = () => { w.remove(); tty.print(label ? label + " " + o.label : o.label); res(o.value); };
+        w.appendChild(b); });
+      ttyEl.appendChild(w); ttyEl.scrollTop = ttyEl.scrollHeight;
+    });
+  },
+};
+
+async function main(tty) {
+  const WT = ["Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag"];
+  const MO = ["Januar","Februar","Maerz","April","Mai","Juni","Juli",
+              "August","September","Oktober","November","Dezember"];
+  const d = new Date();
+  tty.print("GET DATUM");
+  tty.print("");
+  tty.print(WT[d.getDay()] + ", " + d.getDate() + ". " + MO[d.getMonth()] + " " + d.getFullYear());
+  tty.print("");
+  tty.print("(Im Original 1983: Dienstag, 10. Mai 1983 — hier das heutige Datum.)");
+  tty.print("");
+  const s = await tty.input("Eigenes Datum TT.MM.JJJJ (leer = Ende):");
+  if (s.trim()) {
+    const m = s.trim().match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})$/);
+    if (m) { const e = new Date(+m[3], +m[2]-1, +m[1]);
+      tty.print(WT[e.getDay()] + ", " + e.getDate() + ". " + MO[e.getMonth()] + " " + e.getFullYear()); }
+    else tty.print("Format: TT.MM.JJJJ");
+  }
+  tty.print("ENDE");
+}
+main(tty);
+</script>
+</body></html>
