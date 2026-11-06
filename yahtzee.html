@@ -134,7 +134,7 @@ async function main(tty) {
 
   const PIP = ["","\u2680","\u2681","\u2682","\u2683","\u2684","\u2685"];
   const buch = ["A","B","C","D","E"];
-  const state = { dice: [1,1,1,1,1], hold: [false]*5, wuerfe: 0, spieler: 0 };
+  const state = { dice: [1,1,1,1,1], hold: [false,false,false,false,false], wuerfe: 0, spieler: 0 };
 
   function render() {
     const p = state.spieler, tp = T[p];
@@ -183,8 +183,8 @@ async function main(tty) {
       const c = +b.dataset.kat, val = wert(c, state.dice, tp);
       tp[c] = val;
       const Mx = Math.max(...[0,0,0,0,0,0].map((_,m)=>state.dice.filter(d=>d===m+1).length));
-      if (Mx === 5 && tp[11] !== null) tp.yb = (tp.yb || 0) + 100;
-      state.hold = [false]*5; state.wuerfe = 0;
+      if (Mx === 5 && tp[11] === 50) tp.yb = (tp.yb || 0) + 100;
+      state.hold = [false,false,false,false,false]; state.wuerfe = 0;
       next();
     });
   }
