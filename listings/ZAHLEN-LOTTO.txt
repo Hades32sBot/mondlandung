@@ -1,0 +1,59 @@
+10
+zo
+30
+40
+50
+&0
+70
+En
+0
+
+100
+
+0
+120
+130
+140
+150
+160
+170
+130
+190
+200
+210
+320
+230
+
+2A0
+
+FRINT TAB(20 3 ;,"xxx ZAHLEN-LOTTO xxx"
+DIM ALAP1,X4 14]
+PRINT
+ALII=ZINTCCAYF-DIRRNDCOLIIH1
+FOR K=2 TO 49
+
+AIKI=INTCAFIKKNDECIII +1
+
+FÜR J=1 TO K-1
+
+IF AIKl=ALJI THEN 60
+
+NEXT J
+NEXT K
+PRINT "Der Zufallszahlen-Generator"
+PRINT "bietet Ihnen folgende Gewinnzahlen anı"
+PRINT
+FÜR L=1 TO &
+
+PRINT USING 140: ALL]
+
+IMAGE #,K,2%X
+NEXT I.
+PRINT
+PRINT
+INPUT "Wuenschen Sie noch einen Versuch ? LI/NI ",X#
+IF X$="7" THEN 30
+IF Xb="N" THEN 240
+GOTO 200
+END
+

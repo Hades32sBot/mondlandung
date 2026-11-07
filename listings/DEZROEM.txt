@@ -1,0 +1,184 @@
+20
+30
+A
+0
+0
+ya
+80
+vo
+100
+110
+120
+130
+1940
+150
+1&0
+170
+180
+190
+=00
+210
+220
+230
+ZAU
+250
+26N
+270
+280
+Er‘
+300
+310
+320
+330
+340
+350
+360
+370
+350
+390
+400
+410
+420
+A430
+AA
+450
+Ab
+470
+430
+490
+500
+510
+WyeA |
+530
+340
+50
+560
+370
+>30
+Bi Ji)
+5600
+&10
+620
+630
+631
+540
+
+REM xx 1=1,
+REM #%% 100=C
+REM
+
+DIM Ak1L20]
+FOR I=1 T0 20
+AsLlI=" "
+
+NEXT I
+
+PRINT
+
+INPUT "Dezimalzahl:
+IF A>3888 THEN 120
+
+IF A{1 THEN &
+B=A
+
+IF A<1000 THE
+Abeäge"'M"
+A=A-1000
+
+GOTD 160
+
+IF A500 THEN
+IF 63899 THEN
+AF=zABT+"D"
+A=A-500
+
+IF A>399? THEN
+IF Asi100 THEN
+AbzAH+"t"
+A=A-100
+
+GOTO 250
+AasbeAst+"lh"
+A=A--400
+
+M xx# PRÜGR.NAME:
+REM xxx UMRECHNEN EINER DEZIMAL IN EINE ROEMISCHE ZAHL
+REM xxx Die Dezimalzahl darf »1
+
+A=yN > ml) } 9:1IX,
+‚ 400=CD,
+
+40
+
+N 200
+
+240
+
+Br)
+
+IF A{50 THEN 35
+
+IF A>B9 THEN 5
+
+AbzAg+"L"
+A=A-50
+
+LF A(40 THEN
+A$=AB+UXL"
+A=A-40
+
+GOTO 430
+IF A{10 THEN
+AbzAbr"x"
+A=A-10
+
+GOTO 390
+
+IF A=9 THEN &
+IF A{S THEN 4
+Ab=zAg+H"y"
+A=A-5
+
+370
+
+430
+
+80
+Yai
+
+IF A=0 THEN 520
+
+IF A=4 THEN &
+ASzAgH"T"
+n=A-1
+
+GOTDO 470
+ASzAb+"CM"
+A=A-900
+GOTO 310
+AbeAgt'xC"
+A=A-90
+GOTO 330
+AS=eAHT"IX"
+GOTD 620
+AtzASt"IV"
+GOTO 620
+
+PRINT TARBCIIDd;, "= "At
+INPUT "Weiter ? LJ/N]
+IF Rb="jJ" THEN 80
+
+END
+
+00
+
+DEZROEM
+
+10=%X, AU=LX,
+
+2%
+EEK
+KRK
+xE%
+KRX
+

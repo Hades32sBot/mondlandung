@@ -1,0 +1,123 @@
+10 REM xxx PROCR. NAME: TABLE xyH
+ZU REM xxx Time-Speed-Distance Table xx%
+30 REM x%%
+40 REM &xx HOME CLEAR HOME xxx
+0 PRINT 27'427" 1’ 27°M"
+&0 PRINT TAB(273,"Time=-Speed-Distance Table"
+70 PRINT
+80 PRINT A
+"Eerechnung der Fahrzeit bei unterschiedl. Geschwindigkeiten u. En&ä
+tfernungen,"
+0 PRINT
+100 PRINT & .
+"Geben Sie eine min, u. eine max, Geschwindigkeit, sowie die Schriä
+ttweite ein."
+110 PRINT
+120 REM xx* JETZT GEHTS LOS x%%x
+130 DIM DIL4)I
+
+140 INPUT "Min.(ckm/h) ı ",Ml
+150 INPUT "Max. km/h) ı ",12
+
+160 IF MI>O THEN 220
+170 ELSE 140
+180 IF MI>M2 THEN 140
+190 IF M2<1000 THEN 220
+200 PRINT "Das ist mir zu schnell !"
+210 GOTO 150
+220 INPUT "Schr ittweite "|
+230 PRINT
+240 PRINT "Geben Sie nun 4 verschiedene Entfernungen an"
+250 FOR L:=1 TO 4
+260 PRINT SH-HBB8; "Entfernung ";L;
+270 INPUT ": ",DEL]
+280 Ir DELIK1001 THEN 310
+290 PRINT "Das ist mir zu weit"
+300 GOTO 260
+310 NEXT L
+320 PRINT
+330 Jee"N"
+340 INPUY "Moechten Sie die Tabelle drucken ? LJZ/ZNI ",J%
+350 REM x%% HOME CLEAR HOME xxx
+360 PRINT az rpynjurngzupgn
+370 PRINT TAB(t27),’Z7P"ARABTIME-SPEED-DISTANGE TABLE"
+Bu 380 PRINT
+390 PRINT &
+"SPEED (km/h) Ente DISTANCE (km) zum
+400 PRINT .
+A108 PRINT USING 420; (FOR I=1 TO 4,DLIN)
+420 IMAGE #,10X,"1",405X,4D,7%,"1
+430 PRINT rs
+
+J nen am en ven m are an onen um fe m one onen son om an sm rn sn um vo m born am mn nen nf mn nen mn Mn nn mn oc ann na nn m on mann nano ff ann wen sn nn une m aaa nr ne ann won sun ran an an an fe nn an A
+
+anne none d0n0 ann aan sone man ante san Er u
+
+440 PRINT A  _ \
+“ I Min. Sek, I Min. Sek, I Min, Sek, Li &
+
+Min, Sek, LI"
+
+ASO PRINT &
+
+u
+
+Jen san mm ae tar ann nen son me nf nm an area mr mr me wor ar a vn an ar mm an nn fe nn am sn mn mn m mn ne mn ann sn un so man ff a vn ar ae nn an a mu ar aan ano am u an ann af san sn
+
+Mina non san nam ara mn aine nn mann naar mann an aner I u
+
+460 FÜR X=Mi TO M2 STEP W
+
+470 FOR I=1 TO 4
+
+450 TI=INT(3600xDL11/X)
+490 ZEII=INTCTI/60)
+500 SLI1=T1-(ZLI1R60)
+
+510 NEXT I
+
+sed PRINT USING 530;X,<(FOR I=1 TO 4,21113,5L1))
+550 IMAGE 3X,40,3X,"1",4(90,2X,3D,2%X, "1"
+
+SAU NEXT X
+
+30 PRINT &
+
+BE nun mn man man me san mn son nm ann mn anan nm an nn anne m an nn nn nn ann an af mu a an anne au men an am Don ann en un ann ann an mn af an an un on an vn man ar son ae un u san sm urn un af ann an m FR,
+Be See a ee u u
+560 IF J4="N" THEN 810 |
+570 REM xxx Tabelle wird auf dem Drucker ausgegeben |! xxx
+80 FILES OPR
+#0 PRINT #1,CHRSCO12) u
+800 PRINT #1: TAR(2TI Pa TIME-SPEED-DISTANCE TABLE”
+A180 PRINT Al
+620 PRINT #1;&_
+"SPEED Ckm/h) zmm  DISTANGE (ka) sum!
+&6&0 PRINT IR
+&40 PRINT #1 USING s50;(FOR I=l TO 4,DLID
+650 IMAGE 4,10%,"1",405X,4D,7X,"1")
+&&D PRINT A
+670 PRINT #1 ;%&
+N na om oo ann mann m on rn anne en nf wo so mn do nano m ame wnea soe se a an dann mr nun af ms dere mn ann ame an an Are muin an nor an dere mn ar ao of on oa non sone on ann an sa sn an se sn aan an aan an af ame ann sn A,
+KK a ei
+680 PRINT #1;%
+“ I Min. Sek, I Min, Sek, 1 Min, Sek. I n
+Min. Sek, I"
+570 PRINT #1;&
+BE anne anan on ann ao sun an aunn ana m uff non ann ana ann m an m non min man mn one ser u ann anne of ann so anne ann on sn ao ana sun an don are am sn von mo off une aan sn non anne non an ar ann man ne sn vo sare mn aan af von ner ann ZÜ,
+En See er
+700 FOR X=Mil TO M2 STEP W
+710 FOR I=1 TO 4
+TED TI=INT C3600xDLL1/X)
+730 ZEII=INTCTL/60)
+FA SL.11=71-CZEI1860)
+750 NEXT I
+7&o0 PRINT #1 USING 770:X, (FOR I=1 TO 4,ZLIL,SIID
+770 IMAGE 3X,4D,3X,"1",409D,2X,3D ,2X, "1
+780 NEXT X
+790 PRINT #1;&
+NE un um une ano va as a ff sm san mn nn sa a m mn m po mm non anna m af un un or sr sm aan u sr sn ba an u fra sn rn m an dan nn u m a sa au nn un apa sn na un
+matt onen en00 ner Saw dann Mina annk nano sasa Ann sans saae I un
+‚800 ASSIGN %,1
+810 END
+

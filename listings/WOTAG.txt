@@ -1,0 +1,31 @@
+>92
+
+Ss
+A
+
+m WOTAG
+10 REM "Wochentag berechnen; Stand: 05.05.1983"
+ef PRINT" TAG,MONAT, JAHR CTT,MM,JIITI"
+Fr 30 INPUT TY,M,J
+40 Zen
+50 IF FZALHINTCJ/AR THEN 80
+zu &0 IF M<{=2 THEN 80
+70 2='
+— 0 ZeirtieHRr365rINTC(I-1274)
+= »0 DIM ML12]I
+
+100 FOR K=1 TO 12
+-. 110 READMIKI-
+=." 120 NEXT K
+
+130 S=Z+MIM1+rTY
+1440 R=5-1NT6877)%7
+-....150 FOR I=1 T0 7
+“ 160 READ T$LL]
+„170 NEAT 3
+u 180 PRINT "Das ist ein ";T#LR+1]
+170 DATA 0,31,59,90,120,151,181,212,243,273,304,334
+200 DIM T#L7,10]
+0.210 DATA "Samstag", "Sonntag", "Montag", "Dienstag", "Mittwoch", &
+"Donnerstag", "Freitag"
+

@@ -36,6 +36,7 @@
   <div class="sub">BASIC-Programm TABLE — Time-Speed-Distance Table (Fahrzeit bei Geschwindigkeiten und Entfernungen).</div>
   <div id="tty" aria-live="polite"></div>
   <div id="ui"></div>
+  <div class="sub" style="margin-top:24px">Original-Listing: <a href="listings/TABLE.pdf">PDF-Scan</a> · <a href="listings/TABLE.txt">TXT (OCR)</a></div>
 </div>
 <script>
 const ttyEl = document.getElementById('tty');
@@ -97,6 +98,8 @@ async function main(tty) {
     D.push(d);
   }
   const mm = (t) => Math.floor(t / 60), ss = (t) => t % 60;
+  const j = await tty.buttons("Moechten Sie die Tabelle drucken ? [J/N]",
+    [{ label: "J", value: "J" }, { label: "N", value: "N" }]);
   tty.print("");
   tty.print("                     TIME-SPEED-DISTANCE TABLE");
   tty.print("");
@@ -115,7 +118,10 @@ async function main(tty) {
   }
   tty.print("-------------------+-------------------------------------------------------I");
   tty.print("");
-  tty.print("(Druckerausgabe FILES QPR entfaellt — die Tabelle steht hier.)");
+  if (j === "J") {
+    tty.print("(Im Original: FILES QPR + PRINT #1 auf den Drucker — hier der Browser-Druckdialog.)");
+    window.print();
+  }
   await tty.input("[RETURN]");
   tty.print("ENDE");
 }

@@ -1,0 +1,160 @@
+NIMM
+10 REM NIMM-SPIEL
+20 PRINT CHR$(27)+"H"+CHR$(27)+"J"
+30 PRINT "Dies ist das NIMM-Spiel"
+40 PRINT
+41 PRINT "Sag mir eine Zahl zwischen 10 und 200"
+70 INPUT Z
+80 Z=INT(Z+.5)
+90 IF Z>200 OR Z<10 THEN 110
+100 GOTO 140
+110 PRINT &
+. "Du sollst nicht mogeln! Ich moechte eine Zahl zwischen 10 und 200%
+120 GOTO 70
+140 PRINT "Jeder darf abwechselnd eine Zahl ’X’ abziehen."
+150 PRINT "Wie gross soll ’X’ maximal sein?"
+160 PRINT "Waehle im Bereich von ";INT(Z/8);" und ";INT(Z/3);"."
+210 INPUT X
+220 ul,
+230 IF X<Z/3 THEN 270
+240 PRINT "Du Trottel! ";X;" ist zu gross!"
+250 GOTO 160
+270 IF X>Z/8 THEN 310
+280 PRINT "Willst Du ewig spielen?"
+290 GOTO 160
+310 PRINT &
+"Wer die letzte Zahl abzieht und dabei eine Null oder eine "
+320 PRINT "negative Zahl erhaelt, hat verlorenverloren!"
+330 PRINT
+360 0=3
+380 PRINT "Ich fange an."
+400 FOR M=0 TO Z/X+1
+410 IF Z=M*(X+1)+1 THEN 440
+420 NEXT M
+430 GOTO 470
+440 PRINT "Du sollst eine Chance haben!"
+460 Q=-1
+470 Q=0+1
+480 FOR M=0 TO Z/X+1
+490  A=Z-(M*(X+1)+1)
+500 IF A<=X AND A>0 THEN 550
+
+510 NEXT M
+
+520 Q=0
+
+530 A=INT(RND(Z)*X)
+
+540 IF A=0 THEN 530
+
+550 IF Q=1 THEN 570
+
+560 GOTO 590
+
+570 PRINT "Ha! Chance verspielt !!"
+580 REM
+
+590 Z=7-A
+
+600 IF Z<=0 THEN 620
+
+610 GOTO 690
+
+620 PRINT Z;"Scheiben... ! Ich habe verloren!"
+
+640 PRINT "Entschuldigung, dass ich geblufft habe!"
+680 GOTO 1020
+
+690 PRINT Z+A;"-";A;"=";7
+
+710 PRINT Z;" Zieh Deine Zahl ab!"
+
+720 INPUT A
+
+730 A=INT(A+.5)
+
+740 IF A<=0 THEN 770
+
+750 IF A>X THEN 810
+
+760 GOTO 840
+
+770 PRINT "Nicht mogeln! ";A;" ist zu klein!"
+
+780 REM
+
+790 PRINT Z;" Ziehe eine andere Zahl ab!"
+
+800 GOTO 720
+
+810 PRINT "Mogeln gilt nicht! ";A;" ist zu gross!"
+
+830
+840
+850
+860
+880
+890
+900
+910
+920
+930
+940
+950
+960
+970
+980
+990
+1000
+1010
+1020
+1030
+1040
+1050
+1060
+1090
+1110
+1120
+
+GOTO 790
+
+Z=1-A
+
+IF Z<=0 THEN 1000
+
+PRINT Z+A;"-";5A;"=";27;" Okayl"
+IF Z>4*X THEN 470
+
+IF Z<2*X THEN 970
+
+IF Z<3*X THEN 940
+
+KEIN "Hoppla, jetzt wird’s schwer!"
+
+GOTO 470
+
+RRUNT "Moment, ich muss erst noch nachdenken!"
+GOTO 470
+
+ERINT "Du hast keine Chance mehr!!!"
+
+GOTO 470
+
+PRINT Z;" Du hast verloren! Ha, Ha, Ha!!!"
+
+REM
+
+PRINT "Noch ein Spielchen ..? [J/N]"
+INPUT J$
+
+IF UPS$(J$)="J" THEN 1090
+
+PRINT "Schade, Feigling! Wer will nun?"
+GOTO 1120
+
+PRINT "Neues Spiel, neues Glueck!"
+
+GOTO 40
+
+END
+

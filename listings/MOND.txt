@@ -1,0 +1,484 @@
+410 REM x** PROGR.NAME: MOND
+
+2X
+\ 20 REM x®## MONDLANDUNG SIMULIEREN KRX
+30 REM
+#0 PRINT TAR(353:’27"AdECMDNDLANDUNG"
+530 PRINT
+” &0 PRINT j
+70 PRINT TABt10);"Sie koennen eine -Mondlandung simulieren"
+u 80 PRINT TAB<S10);&
+"Alle 10 Sek. koennen Sie die Treibstoffrate bestimmen"
+90 PRINT TAB(10):&
+_ "0 oder irgendeinen Wert zwischen 8 und 200 Ltir./Sek."
+100 PRINT TAR(10);&
+"Kapselgewicht 15 Tonnen, Freier Fall: Aufschlag in 120 Sek,"
+u 110 PRINT TARB(10);"Veberwachung erfolgt in Houston:"
+120 PRINT
+130 L=0
+_ 140 A=120
+j 150 Val
+160 M=32500
+170 K=0
+” 150 N=16500
+170 G=,001
+u 200 Z=1.8
+210 PRINT & .
+Ss." Zeit Entfernung(km) Geschw, (km/h) Sprit,Ltr K-Rate
+toffratre:"
+220 PRINT %&
+er
+230 PRINT USING 240 ;51,A,3600%V ,M-N,K
+240 IMAGE #,2X,3D,6X,30D.3D,9X,40.DD,8X,5D,3%X,5D,2X
+u 250 INPUT " "K
+260 T=s10
+270 IF K£0 THEN 310
+un 280 IF 2004K THEN 310
+. _E#0 IF K)=8 THEN 370
+300 IF K=0 THEN 370
+310 PRINT "Nicht erlaubt !"
+= 320 FOR X=1 TO 60
+330 PRINT ",";
+_ 340 NEXT X
+850 PRINT _"K=";K
+360 GOTO 230
+5370 IF (M-N)<.001 THEN 480
+u 380 IF_T(.,001 THEN 230
+370 5=T
+„= 400 IF CN+S&K-M)<=0 THEN 420
+410 SmiM-NI/K
+"E  A420 GOSUR 950
+"u 450 IF IX=0 THEN 820
+440 IF V<=0 THEN 460 |
+450 IF JO THEN 870
+_ Ab0 GOSUR 990
+“70 GOTO 370
+=®© 480 PRINT "Sprit alle nach" ;l.;"Sekunden !"
+kr 40 B=lSoNR (VrVHr2xArt)-V)/G
+== 500 V=eV+5x%G
+S1D L=L+5
+_.E 820 PRINT
+30 PRINT USING S4A0:L
+540 IMAGE "Gelandet nach: ",3D," Sekunden"
+L 350 WEZE008V
+560 PRINT USING 570;4
+370 IMAGE "Endgeschwindigkeit von: ",3D,2D," km/h"
+580 PRINT USING 590 ;M-N
+. S?0 IMAGE "Rest-Sprit: ",K," Liter!"
+
+Treibsäk
+
+en a un A,
+
+600
+610
+620
+630
+540
+650
+660
+br
+680
+590
+700
+710
+720
+730
+740
+750
+760
+var
+780
+770
+
+800
+
+810
+820
+830
+g4a0
+350
+860
+870
+350
+390
+
+900
+
+910
+yon
+
+930
+
+YA0
+950
+
+960
+
+az
+
+730
+
+IHpU
+1000
+1010
+1020
+1030
+1040
+1050
+
+RETURN.
+
+IF W=1 THEN 530
+
+PRINT "Perfekte Landung! (Glueck gehabri?"
+
+5OTO 750
+
+IF W’=10 THEN 640
+
+PRINT "Landung koennte besser sein!"
+
+GOTO 750 _ _
+
+IF WI=25 THEN 490
+
+PRINT "Glueckwunsch zur schwachen Landung!"
+
+GOTO 750
+
+iF W>=60 THEN 72
+
+PRINT "Kapsel ist zerstoert. Viel Glueck!"
+
+GOTD 750 _
+
+PRINT "Schade, aber es gibt keine Veberleben mehr fuer Sieltt"
+PRINT USING 740 :4x%,0%
+
+IMAGE "Sie haben einen neuen Krater erzeugt: ",3D.,D," Meter tief".
+PRINT
+
+PRINT "Wollen Sie nocheinmal versuchen ?"
+DIM A$[601
+
+INPUT "Ja <{1) oder nein <{0> ? ",J9
+
+IF J9=1 THEN 130
+
+PRINT "Radar schalter ab"
+
+END
+
+iF 571.005 THEN 530
+Se2x&A/lV+SOR (VRVr RA Ge ZAK/MI dd)
+
+GOSUR 950
+
+GOSUR 990
+GOSUR 820
+
+W=ECI-MRG/CZRK))/2
+S=M&V/CZAK x CH+SOR CWRWHUZ/ZI) 34,05
+
+GOSUB 950
+
+IF i<+0 THEN 820
+
+GÜSUR 790
+
+IF J>=0 THEN 370
+
+IF Vi=0 THEN 370
+
+GOTO 870
+
+W=eSXK/M |
+I=V+6%5+Z8 (-Q-0x82/2-08x3/3-0%%4/4-0%857/5)
+I=A-GXRSKRS/2-VXEHZRSRW/PHIORRD/EHURR 3/1 DHORRA/D0HERRE/ZO)
+RETURN
+
+L=L+$
+
+T=T-8
+
+M=M-5xK
+
+A=l
+
+Va
+
+END
+
+BE,
+
+Sprit alle nach 290
+
+ Gelandet nach: 312 Sekunden
+Endgeschwindigkeit von: 331.76 km/h
+»Rest-Sprit:
+
+Zeit
+
+&ü
+10
+20
+Ki)
++
+50
+&0
+”
+80
+Yu
+
+100
+110
+120
+130
+140
+
+‚150
+
+160
+170
+180
+
+190
+
+200
+210
+220
+230
+40
+
+2
+
+2un
+270
+280
+
+MONDLANDUNG
+
+Sie koennen eine Mondlandung simulieren
+
+Alle 10 Sek,
+
+koennen
+
+Sie die Treibstoffrate bestimmen
+
+0 oder irgendeinen Wert zwischen B und 200 Ltr ,/Sek,
+Kapselgewicht 15 Tonnen,
+leberwachung erfolgt in Houston:
+
+120.000
+110.230
+100.931
+92,123
+33.825
+76,058
+68.846
+62,214
+56.188
+50,797
+45,915
+41,404
+37,27%
+33,550
+30,234
+27,345
+24,098
+22,912
+21.110
+19,209
+17,208
+15.107
+12.90
+10.605
+8,496
+6,883
+3.476
+3.469
+2.674
+
+0 Liter!
+
+Entfernungtkm)
+
+beschw, Cka/h)
+
+3600.00
+3433,48
+3260,43
+3080,41
+2892,94
+2697,49
+2493,46
+2280,20
+2056,97
+1822.93
+1691.33
+1555,29
+1414,55
+1268,85
+1117.92
+961,43
+799,04
+630,40
+666,40
+702,40
+738,40
+774,40
+810.40
+846,40
+671.07
+458,63
+594,63
+560.63
+370,56
+
+Sekunden |}
+
+Freier Fall:
+
+Sprit,itr
+
+15000
+15000
+14000
+13000
+12000
+11000
+10000
+9000
+3000
+7000
+6400
+5300
+5200
+4600
+ADD
+3400
+2800
+2200
+2200
+2200
+2200
+2200
+2200
+2200
+1600
+1000
+1000
+1000
+A000
+
+Aufschlag
+
+K-Ratae
+
+0
+100
+100
+100
+100
+100
+100
+100
+100
+100
+
+60
+&0
+GU
+60
+60
+&0
+60
+60
+
+0
+
+g
+
+0
+
+ü
+
+ü
+
+1]
+
+50
+
+60
+0 .
+0
+
+60
+
+Schade, aber es gibt keine Veberleben mehr fuer Siett!
+29,9 Meter tief
+
+84
+
+© haben
+
+einen
+
+neyen Krater
+
+=eWollen Sie nocheinmal versuchen ?
+
+Ja
+
+‘15
+
+oder nein {0)
+
+Radar schaltet ab
+
+od
+
+er zeugt!
+
+in 120 Sek,
+
+Treibstoffrate:
+
+100
+100
+100
+100
+100
+100
+100
+100
+100
+60
+60
+60
+60
+&0
+&0
+60
+60
+0
+
+0
+
+N
+
+0
+
+0
+
+)
+60
+60
+
+)
+
+50
+40
+

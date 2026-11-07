@@ -1,0 +1,147 @@
+ROEMDEZ .
+
+10 REM xxx PROGR.NAME:
+REM %%x UMRECHNEN EINER ROEMISCHEN IN EINE DEZIMALZAHL
+10=X, 40=XL, 50=L.,
+
+10
+20
+30
+40
+0
+60
+70
+80
+v0
+100
+110
+120
+130
+140
+150
+160
+170
+180
+190
+200
+210
+220
+20
+240
+250
+260
+270
+>80
+290
+300
+310
+
+REM xx% 1=1,
+
+A=Iy, Sul, PmIK,
+
+REM x%% 100=0, 400=CB,
+DIM EL211,R$L[20)
+
+J=1
+PRINT
+INPUT
+
+IF Rg="0"
+=1 TOL
+
+FOR 1
+
+ak:
+
+IF
+Ir
+IF
+IF
+EF
+IF
+IF
+
+BLJ
+
+J=J
+NEXT
+
+"Roemische Zahl:
+L=LENCRE)
+
+R#IT;5II-
+
+aber"
+Agzıy"
+atbz n®
+Apatp"
+pp"!
+Age" "
+PEFUE
+I=R
+
++]
+
+I
+
+Bil)
+
+5=0
+
+FOR J=L TO 1 STEP
+
+THEN
+THEEN
+THEN
+THEN
+THEN
+THEN
+THEN
+
+THEN 310
+
+Kj
+B=10
+EB=100
+EB=1000
+R=5
+B=5D
+B=500
+
+-1
+
+a
+
+ROEMDEZ
+
+500=D, P00=CM,
+
+".R$
+
+IF BISIXBLJ+L1 THEN $5=$5-BLJ]
+ELSE 5=5+BLJ]
+
+NEXT
+PRINT
+
+3
+R#; u
+
+GOTO &0
+
+END
+
+=
+
+r "9
+
+1000=M
+
+Yo=kl
+
+KH
+ER“
+RXx
+xxx
+

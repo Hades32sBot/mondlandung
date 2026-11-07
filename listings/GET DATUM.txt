@@ -1,0 +1,45 @@
+HPZZ1IUIE.00, 14C4AWUD) BASIC (CIHEWLETT-FACKARD CO 197%
+LIST
+GET DATUM
+LIST
+DATUM
+ı0 DIM AI27]
+20 A=DAT$(1,27)
+30 RESTORE 240
+40 FOR I=1 TO 7
+50 REAL DELL]
+60 IF At11;31=D$[IL1 THEN 80
+70 NEXT I
+80 RESTORE 280
+0 FOR Jel TO I
+100 READ T$LJ1]
+110 NEXT J
+120 RESTORE 260
+130 FOR K=1 TO 12
+140 READ MI$SIK]
+150 IF A$L6;31=M1$IK] THEN 170
+1650 NEXT K
+170 RESTORE 300
+180 FOR L=1 TO K
+iF0 READ MELL]
+200 NEXT L
+230 PRINT T$L11F", "+AsL10;521#+", "+MSIKlr" "+A$L14;4]
+220 GOTO 310
+230 DIM D4HI7,3]
+2AU DATA "SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"
+250 DIM MI#L12,3)
+"260 DATA "TAN", "FER", "MAR", "APR", "MAY" "JUN", "JUL", "AUG", "SEP", "DET",&
+"NOV" "DEE"
+270 DIM T%1[7,101
+280 DATA "Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag",&
+"Freitag", "Samstag"
+270 DIM ME[12,9]
+300 DATA "Januar", "Februar", "Maerz", "April","Mai","Juni","Juli",&
+"August", "September", "Oktober", "November", "Dezember."
+310 END i
+RUN
+DATUM
+Dienstag, 10. Mai 1983
+
+— EXIT
+
