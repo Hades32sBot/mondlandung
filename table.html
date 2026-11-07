@@ -29,7 +29,12 @@
   th { color:#87C3FF; font-weight:600; text-align:left; }
   .tblwrap { overflow:auto; max-width:100%; }
   .green { color:#3FA266; } .dim { color:#7E8A9E; } .acc { color:#599CE7; }
-  @media print { #tty { font-size:9px; } }
+  #printout { display:none; }
+  @media print {
+    .page > *:not(#printout) { display:none; }
+    #printout { display:block; font-size:9px; line-height:1.4;
+      white-space:pre; color:#000; margin:0; }
+  }
 </style></head><body>
 <div class="page">
   <a class="back" href="index.html">&larr; Uebersicht</a>
@@ -101,26 +106,32 @@ async function main(tty) {
   const mm = (t) => Math.floor(t / 60), ss = (t) => t % 60;
   const j = await tty.buttons("Moechten Sie die Tabelle drucken ? [J/N]",
     [{ label: "J", value: "J" }, { label: "N", value: "N" }]);
-  tty.print("");
-  tty.print("                     TIME-SPEED-DISTANCE TABLE");
-  tty.print("");
-  tty.print("SPEED (km/h)        ====  DISTANCE (km)  ====");
-  tty.print("                    " + D.map(d => String(d).padStart(14)).join(""));
-  tty.print("-------------------+-------------------------------------------------------I");
-  tty.print("                    I   Min.  Sek.  I   Min.  Sek.  I   Min.  Sek.  I   Min.  Sek.  I");
-  tty.print("-------------------+-------------------------------------------------------I");
+  const emit = (s = "") => { tty.print(s); out.push(s); };
+  const out = [];
+  emit("");
+  emit("                     TIME-SPEED-DISTANCE TABLE");
+  emit("");
+  emit("SPEED (km/h)        ====  DISTANCE (km)  ====");
+  emit("                    " + D.map(d => String(d).padStart(14)).join(""));
+  emit("-------------------+-------------------------------------------------------I");
+  emit("                    I   Min.  Sek.  I   Min.  Sek.  I   Min.  Sek.  I   Min.  Sek.  I");
+  emit("-------------------+-------------------------------------------------------I");
   for (let X = M1; X <= M2 + 1e-9; X += W) {
     let line = String(X).padStart(12) + "   I";
     for (const d of D) {
       const T1 = Math.floor(3600 * d / X);
       line += String(mm(T1)).padStart(9) + "  " + String(ss(T1)).padStart(3) + "  I";
     }
-    tty.print(line);
+    emit(line);
   }
-  tty.print("-------------------+-------------------------------------------------------I");
-  tty.print("");
+  emit("-------------------+-------------------------------------------------------I");
+  emit("");
   if (j === "J") {
     tty.print("(Im Original: FILES QPR + PRINT #1 auf den Drucker — hier der Browser-Druckdialog.)");
+    const pre = document.createElement("pre");
+    pre.id = "printout";
+    pre.textContent = out.join("\n");
+    document.querySelector(".page").appendChild(pre);
     window.print();
   }
   await tty.input("[RETURN]");
