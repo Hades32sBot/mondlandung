@@ -45,7 +45,7 @@ const tty = {
   html(s) { const d = document.createElement("div"); d.innerHTML = s;
     ttyEl.appendChild(d); ttyEl.scrollTop = ttyEl.scrollHeight; },
   clear() { ttyEl.innerHTML = ""; },
-  input(prompt) {
+  input(prompt, mode) {
     return new Promise((res) => {
       const f = document.createElement("form");
       f.className = "row";
@@ -53,6 +53,7 @@ const tty = {
       lb.style.cssText = "color:#87C3FF";
       const inp = document.createElement("input");
       inp.autocomplete = "off"; inp.style.cssText = "flex:1;min-width:100px";
+      if (mode) inp.inputMode = mode;
       const b = document.createElement("button"); b.type = "submit"; b.textContent = "Eingabe";
       f.append(lb, inp, b);
       ttyEl.appendChild(f); inp.focus(); ttyEl.scrollTop = ttyEl.scrollHeight;
@@ -87,7 +88,7 @@ async function main(tty) {
   }
   tty.print("KALWOCHE — Kalender mit Kalenderwochen");
   tty.print("");
-  const s = await tty.input("Jahr (JJJJ):");
+  const s = await tty.input("Jahr (JJJJ):", "numeric");
   const J = parseInt(s);
   if (!Number.isInteger(J) || J < 1000 || J > 9999) { tty.print("ENDE"); return; }
   let kwShown = 0;

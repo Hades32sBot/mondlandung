@@ -45,7 +45,7 @@ const tty = {
   html(s) { const d = document.createElement("div"); d.innerHTML = s;
     ttyEl.appendChild(d); ttyEl.scrollTop = ttyEl.scrollHeight; },
   clear() { ttyEl.innerHTML = ""; },
-  input(prompt) {
+  input(prompt, mode) {
     return new Promise((res) => {
       const f = document.createElement("form");
       f.className = "row";
@@ -53,6 +53,7 @@ const tty = {
       lb.style.cssText = "color:#87C3FF";
       const inp = document.createElement("input");
       inp.autocomplete = "off"; inp.style.cssText = "flex:1;min-width:100px";
+      if (mode) inp.inputMode = mode;
       const b = document.createElement("button"); b.type = "submit"; b.textContent = "Eingabe";
       f.append(lb, inp, b);
       ttyEl.appendChild(f); inp.focus(); ttyEl.scrollTop = ttyEl.scrollHeight;
@@ -85,7 +86,7 @@ async function main(tty) {
   tty.print("");
   tty.print("(Im Original 1983: Dienstag, 10. Mai 1983 — hier das heutige Datum.)");
   tty.print("");
-  const s = await tty.input("Eigenes Datum TT.MM.JJJJ (leer = Ende):");
+  const s = await tty.input("Eigenes Datum TT.MM.JJJJ (leer = Ende):", "decimal");
   if (s.trim()) {
     const m = s.trim().match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})$/);
     if (m) { const e = new Date(+m[3], +m[2]-1, +m[1]);

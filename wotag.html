@@ -45,7 +45,7 @@ const tty = {
   html(s) { const d = document.createElement("div"); d.innerHTML = s;
     ttyEl.appendChild(d); ttyEl.scrollTop = ttyEl.scrollHeight; },
   clear() { ttyEl.innerHTML = ""; },
-  input(prompt) {
+  input(prompt, mode) {
     return new Promise((res) => {
       const f = document.createElement("form");
       f.className = "row";
@@ -53,6 +53,7 @@ const tty = {
       lb.style.cssText = "color:#87C3FF";
       const inp = document.createElement("input");
       inp.autocomplete = "off"; inp.style.cssText = "flex:1;min-width:100px";
+      if (mode) inp.inputMode = mode;
       const b = document.createElement("button"); b.type = "submit"; b.textContent = "Eingabe";
       f.append(lb, inp, b);
       ttyEl.appendChild(f); inp.focus(); ttyEl.scrollTop = ttyEl.scrollHeight;
@@ -80,9 +81,9 @@ async function main(tty) {
   tty.print("WOTAG — Wochentag berechnen; Stand: 05.05.1983");
   tty.print("");
   while (true) {
-    const s = await tty.input("TAG,MONAT,JAHR (TT,MM,JJJJ; 0 = Ende):");
+    const s = await tty.input("TAG,MONAT,JAHR (TT,MM,JJJJ; 0 = Ende):", "decimal");
     if (s.trim() === "0") { tty.print("ENDE"); break; }
-    const m = s.split(",").map(x => Number(x.trim()));
+    const m = s.split(/[,.]/).map(x => Number(x.trim()));
     if (m.length !== 3 || m.some(x => !Number.isInteger(x)) || m[1] < 1 || m[1] > 12) {
       tty.print("Bitte Eingabe ueberpruefen !"); continue;
     }

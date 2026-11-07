@@ -505,6 +505,7 @@
                       </Text>
                       <Row gap={8} wrap>
                         <form
+                          ref={(f) => f && f.querySelector("input")?.setAttribute("inputmode", "decimal")}
                           onSubmit={(e) => { e.preventDefault(); if (eingabe !== "") submit(eingabe); }}
                           style={{ display: "flex", gap: 8 }}
                         >

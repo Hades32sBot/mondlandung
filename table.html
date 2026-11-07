@@ -45,7 +45,7 @@ const tty = {
   html(s) { const d = document.createElement("div"); d.innerHTML = s;
     ttyEl.appendChild(d); ttyEl.scrollTop = ttyEl.scrollHeight; },
   clear() { ttyEl.innerHTML = ""; },
-  input(prompt) {
+  input(prompt, mode) {
     return new Promise((res) => {
       const f = document.createElement("form");
       f.className = "row";
@@ -53,6 +53,7 @@ const tty = {
       lb.style.cssText = "color:#87C3FF";
       const inp = document.createElement("input");
       inp.autocomplete = "off"; inp.style.cssText = "flex:1;min-width:100px";
+      if (mode) inp.inputMode = mode;
       const b = document.createElement("button"); b.type = "submit"; b.textContent = "Eingabe";
       f.append(lb, inp, b);
       ttyEl.appendChild(f); inp.focus(); ttyEl.scrollTop = ttyEl.scrollHeight;
@@ -80,18 +81,18 @@ async function main(tty) {
   tty.print("");
   let M1, M2, W;
   while (true) {
-    M1 = Number(await tty.input("Min.(km/h)    :"));
+    M1 = Number(await tty.input("Min.(km/h)    :", "decimal"));
     if (!(M1 > 0)) { tty.print("Bitte neue Eingabe"); continue; }
-    M2 = Number(await tty.input("Max.(km/h)    :"));
+    M2 = Number(await tty.input("Max.(km/h)    :", "decimal"));
     if (M2 >= 1000) { tty.print("Das ist mir zu schnell !"); continue; }
     if (M1 > M2) continue;
     break;
   }
-  W = Number(await tty.input("Schrittweite  :"));
+  W = Number(await tty.input("Schrittweite  :", "decimal"));
   tty.print("Geben Sie nun 4 verschiedene Entfernungen an");
   const D = [];
   for (let L = 1; L <= 4; L++) {
-    const d = Number(await tty.input("Entfernung " + L + " :"));
+    const d = Number(await tty.input("Entfernung " + L + " :", "decimal"));
     if (d >= 1001) { tty.print("Das ist mir zu weit"); L--; continue; }
     D.push(d);
   }

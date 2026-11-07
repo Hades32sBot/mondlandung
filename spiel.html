@@ -45,7 +45,7 @@ const tty = {
   html(s) { const d = document.createElement("div"); d.innerHTML = s;
     ttyEl.appendChild(d); ttyEl.scrollTop = ttyEl.scrollHeight; },
   clear() { ttyEl.innerHTML = ""; },
-  input(prompt) {
+  input(prompt, mode) {
     return new Promise((res) => {
       const f = document.createElement("form");
       f.className = "row";
@@ -53,6 +53,7 @@ const tty = {
       lb.style.cssText = "color:#87C3FF";
       const inp = document.createElement("input");
       inp.autocomplete = "off"; inp.style.cssText = "flex:1;min-width:100px";
+      if (mode) inp.inputMode = mode;
       const b = document.createElement("button"); b.type = "submit"; b.textContent = "Eingabe";
       f.append(lb, inp, b);
       ttyEl.appendChild(f); inp.focus(); ttyEl.scrollTop = ttyEl.scrollHeight;
@@ -92,7 +93,7 @@ async function main(tty) {
   }
   let N = 0;
   while (!(N > 1 && N <= 20)) {
-    N = Number(await tty.input("WIEVIELE ZAHLEN SOLL IHRE KOLONNE ENTHALTEN ?"));
+    N = Number(await tty.input("WIEVIELE ZAHLEN SOLL IHRE KOLONNE ENTHALTEN ?", "numeric"));
     if (N > 20) tty.print("!!! MAX. GROESSE IST 20 !!!");
     else if (!(N > 1)) tty.print("BITTE NEUE EINGABE");
   }
@@ -104,7 +105,7 @@ async function main(tty) {
   show();
   let T = 0;
   while (true) {
-    const R = Number(await tty.input("WIEVIELE ZAHLEN SOLLEN GEDREHT WERDEN ?"));
+    const R = Number(await tty.input("WIEVIELE ZAHLEN SOLLEN GEDREHT WERDEN ?", "numeric"));
     if (R === 0) { tty.print("ENDE"); return; }
     if (!(R >= 1 && R <= N)) { tty.print("DAS SIND ZUVIELE, SIE KOENNEN MAX. UMDREHEN: " + N); continue; }
     T++;
