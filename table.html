@@ -106,25 +106,27 @@ async function main(tty) {
   const mm = (t) => Math.floor(t / 60), ss = (t) => t % 60;
   const j = await tty.buttons("Moechten Sie die Tabelle drucken ? [J/N]",
     [{ label: "J", value: "J" }, { label: "N", value: "N" }]);
+  // Spaltenlayout wie IMAGE 3X,4D,3X,"I",4(9D,2X,3D,2X,"I"): I bei 11,28,45,62,79
   const emit = (s = "") => { tty.print(s); out.push(s); };
   const out = [];
+  const SEP = "-".repeat(10) + "+" + "-".repeat(67) + "I";
   emit("");
-  emit("                     TIME-SPEED-DISTANCE TABLE");
+  emit("                           TIME-SPEED-DISTANCE TABLE");
   emit("");
-  emit("SPEED (km/h)        ====  DISTANCE (km)  ====");
-  emit("                    " + D.map(d => String(d).padStart(14)).join(""));
-  emit("-------------------+-------------------------------------------------------I");
-  emit("                    I   Min.  Sek.  I   Min.  Sek.  I   Min.  Sek.  I   Min.  Sek.  I");
-  emit("-------------------+-------------------------------------------------------I");
+  emit("SPEED (km/h) ====  DISTANCE (km)  ====");
+  emit("           I" + D.map(d => String(d).padStart(9) + "       I").join(""));
+  emit(SEP);
+  emit("           I" + "     Min.  Sek  I".repeat(4));
+  emit(SEP);
   for (let X = M1; X <= M2 + 1e-9; X += W) {
-    let line = String(X).padStart(12) + "   I";
+    let line = String(X).padStart(7) + "   I";
     for (const d of D) {
       const T1 = Math.floor(3600 * d / X);
       line += String(mm(T1)).padStart(9) + "  " + String(ss(T1)).padStart(3) + "  I";
     }
     emit(line);
   }
-  emit("-------------------+-------------------------------------------------------I");
+  emit(SEP);
   emit("");
   if (j === "J") {
     tty.print("(Im Original: FILES QPR + PRINT #1 auf den Drucker — hier der Browser-Druckdialog.)");
